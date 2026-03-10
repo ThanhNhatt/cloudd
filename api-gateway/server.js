@@ -1,5 +1,3 @@
-console.log("GATEWAY STARTED - TEST");
-
 const express = require("express");
 const cors = require("cors");
 const { createProxyMiddleware } = require("http-proxy-middleware");
@@ -8,9 +6,11 @@ const app = express();
 
 app.use(cors({
   origin: "https://frontend-toee.onrender.com",
-  methods: ["GET","POST","PUT","DELETE"],
+  methods: ["GET","POST","PUT","DELETE","OPTIONS"],
   allowedHeaders: ["Content-Type","Authorization"]
 }));
+
+app.options("*", cors());
 
 app.use(express.json());
 
