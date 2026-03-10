@@ -19,7 +19,7 @@ app.use((req,res,next)=>{
 app.use(
   "/auth",
   createProxyMiddleware({
-    target: "http://localhost:3002",
+    target: "https://auth-services-otpw.onrender.com",
     changeOrigin: true,
     pathRewrite: {
       "^/auth": ""
@@ -31,7 +31,7 @@ app.use(
 app.use(
   "/students",
   createProxyMiddleware({
-    target: "http://localhost:3001",
+    target: "https://student-services-qme3.onrender.com",
     changeOrigin: true,
     pathRewrite: {
       "^/students": ""
@@ -48,7 +48,7 @@ app.use(
 app.use(
   "/courses",
   createProxyMiddleware({
-    target: "http://localhost:3003",
+    target: "https://course-services.onrender.com",
     changeOrigin: true,
     pathRewrite: {
       "^/courses": ""
@@ -60,7 +60,7 @@ app.use(
 app.use(
   "/enrollments",
   createProxyMiddleware({
-    target: "http://localhost:3005",
+    target: "https://enrollment-services.onrender.com",
     changeOrigin: true,
     pathRewrite: {
       "^/enrollments": ""

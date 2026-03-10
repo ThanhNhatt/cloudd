@@ -7,12 +7,12 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+
 const pool = new Pool({
-  user: "postgres",
-  host: "localhost",
-  database: "enroll_db",
-  password: "123",
-  port: 5432,
+  connectionString: "postgresql://micsql_user:i899qR4MwWxxv9b5w5mtVwSpv5WquU2g@dpg-d6nu1cfgi27c73ac10jg-a/micsql",
+  ssl: {
+    rejectUnauthorized: false
+  }
 });
 
 
