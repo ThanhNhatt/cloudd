@@ -4,73 +4,71 @@ const { createProxyMiddleware } = require("http-proxy-middleware");
 
 const app = express();
 
+app.use(express.json());
+
+// CORS
 app.use(cors({
   origin: "https://frontend-toee.onrender.com",
-  methods: ["GET","POST","PUT","DELETE","OPTIONS"],
-  allowedHeaders: ["Content-Type","Authorization"]
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"]
 }));
 
 app.options("*", cors());
 
-app.use(express.json());
-
 // log request
-app.use((req,res,next)=>{
-  console.log("Gateway request:", req.method, req.url)
-  next()
-})
+app.use((req, res, next) => {
+  console.log("Gateway request:", req.method, req.url);
+  next();
+});
 
 
 // AUTH SERVICE
-app.use(
-  "/auth",
+app.use("/auth",
   createProxyMiddleware({
     target: "https://auth-services-otpw.onrender.com",
     changeOrigin: true,
-    pathRewrite: {
-      "^/auth": ""
+    pathRewrite: { "^/auth": "" },
+    onProxyReq: (proxyReq, req, res) => {
+      proxyReq.setHeader("origin", "https://frontend-toee.onrender.com");
     }
   })
 );
 
 
 // STUDENT SERVICE
-app.use(
-  "/students",
+app.use("/students",
   createProxyMiddleware({
     target: "https://student-services-qme3.onrender.com",
     changeOrigin: true,
-    pathRewrite: {
-      "^/students": ""
-    }
+    pathRewrite: { "^/students": "" }
   })
 );
 
 
 // COURSE SERVICE
-app.use(
-  "/courses",
+app.use("/courses",
   createProxyMiddleware({
     target: "https://course-services.onrender.com",
     changeOrigin: true,
-    pathRewrite: {
-      "^/courses": ""
-    }
+    pathRewrite: { "^/courses": "" }
   })
 );
 
 
 // ENROLLMENT SERVICE
-app.use(
-  "/enrollments",
+app.use("/enrollments",
   createProxyMiddleware({
     target: "https://enrollment-services.onrender.com",
     changeOrigin: true,
-    pathRewrite: {
-      "^/enrollments": ""
-    }
+    pathRewrite: { "^/enrollments": "" }
   })
 );
+
+
+// TEST ROUTE (để kiểm tra gateway sống)
+app.get("/", (req, res) => {
+  res.send("API Gateway running");
+});
 
 
 const PORT = process.env.PORT || 5000;
