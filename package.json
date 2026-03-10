@@ -1,0 +1,12 @@
+{
+  "scripts": {
+    "auth": "cd auth-services && node server.js",
+    "student": "cd student-services && node server.js",
+    "course": "cd course-services && node server.js",
+    "grade": "cd grade-service && node server.js",
+    "gateway": "cd api-gateway && node server.js",
+    "frontend": "cd frontend && npm start",
+
+    "start": "run-p auth student course grade gateway frontend"
+  }
+}
