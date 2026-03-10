@@ -6,16 +6,22 @@ const { createProxyMiddleware } = require("http-proxy-middleware");
 
 const app = express();
 
-app.use(cors());
+app.use(cors({
+  origin: "https://frontend-toee.onrender.com",
+  methods: ["GET","POST","PUT","DELETE"],
+  allowedHeaders: ["Content-Type","Authorization"]
+}));
 
-// log request trước
+app.use(express.json());
+
+// log request
 app.use((req,res,next)=>{
   console.log("Gateway request:", req.method, req.url)
   next()
 })
 
 
-// ================= AUTH SERVICE =================
+// AUTH SERVICE
 app.use(
   "/auth",
   createProxyMiddleware({
@@ -27,7 +33,8 @@ app.use(
   })
 );
 
-// ================= STUDENT SERVICE =================
+
+// STUDENT SERVICE
 app.use(
   "/students",
   createProxyMiddleware({
@@ -35,16 +42,12 @@ app.use(
     changeOrigin: true,
     pathRewrite: {
       "^/students": ""
-    },
-   
-    onError: (err, req, res) => {
-      console.error("Proxy error for /students:", err.message);
-      res.status(500).send("Proxy error");
     }
   })
 );
 
-// ================= COURSES SERVICE =================
+
+// COURSE SERVICE
 app.use(
   "/courses",
   createProxyMiddleware({
@@ -56,7 +59,8 @@ app.use(
   })
 );
 
-// ================= ENROLLMENT SERVICE =================
+
+// ENROLLMENT SERVICE
 app.use(
   "/enrollments",
   createProxyMiddleware({
@@ -67,6 +71,7 @@ app.use(
     }
   })
 );
+
 
 const PORT = process.env.PORT || 5000;
 
