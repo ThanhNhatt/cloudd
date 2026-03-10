@@ -72,7 +72,9 @@ app.get("/", (req, res) => {
 
 
 const PORT = process.env.PORT || 5000;
-
+app.get("/", (req, res) => {
+  res.send("API Gateway is running");
+});
 app.listen(PORT, () => {
   console.log("API Gateway running on port", PORT);
 });
