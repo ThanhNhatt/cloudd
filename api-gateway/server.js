@@ -5,15 +5,7 @@ const { createProxyMiddleware } = require("http-proxy-middleware");
 const app = express();
 
 app.use(express.json());
-
-// CORS
-app.use(cors({
-  origin: "https://frontend-toee.onrender.com",
-  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-  allowedHeaders: ["Content-Type", "Authorization"]
-}));
-
-app.options("*", cors());
+app.use(cors());
 
 // log request
 app.use((req, res, next) => {
@@ -21,19 +13,14 @@ app.use((req, res, next) => {
   next();
 });
 
-
 // AUTH SERVICE
 app.use("/auth",
   createProxyMiddleware({
     target: "https://auth-services-otpw.onrender.com",
     changeOrigin: true,
-    pathRewrite: { "^/auth": "" },
-    onProxyReq: (proxyReq, req, res) => {
-      proxyReq.setHeader("origin", "https://frontend-toee.onrender.com");
-    }
+    pathRewrite: { "^/auth": "" }
   })
 );
-
 
 // STUDENT SERVICE
 app.use("/students",
@@ -44,7 +31,6 @@ app.use("/students",
   })
 );
 
-
 // COURSE SERVICE
 app.use("/courses",
   createProxyMiddleware({
@@ -53,7 +39,6 @@ app.use("/courses",
     pathRewrite: { "^/courses": "" }
   })
 );
-
 
 // ENROLLMENT SERVICE
 app.use("/enrollments",
@@ -64,17 +49,13 @@ app.use("/enrollments",
   })
 );
 
-
-// TEST ROUTE (để kiểm tra gateway sống)
+// TEST ROUTE
 app.get("/", (req, res) => {
   res.send("API Gateway running");
 });
 
-
 const PORT = process.env.PORT || 5000;
-app.get("/", (req, res) => {
-  res.send("API Gateway is running");
-});
+
 app.listen(PORT, () => {
   console.log("API Gateway running on port", PORT);
 });
