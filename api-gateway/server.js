@@ -12,8 +12,6 @@ app.use(cors({
   allowedHeaders: ["Content-Type","Authorization"]
 }));
 
-app.options("*", cors());
-
 // log request
 app.use((req, res, next) => {
   console.log("Gateway request:", req.method, req.url);
