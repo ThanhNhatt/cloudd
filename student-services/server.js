@@ -41,6 +41,9 @@ app.delete("/:id", async (req, res) => {
   res.json({ message: "Deleted" });
 });
 
-app.listen(3001, () => {
-  console.log("Student service running on 3001");
+
+const PORT = process.env.PORT || 3001;
+
+app.listen(PORT, () => {
+  console.log("Student Service running on port", PORT);
 });

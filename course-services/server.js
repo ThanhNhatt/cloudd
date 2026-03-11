@@ -97,6 +97,9 @@ app.delete("/courses/:id", async (req, res) => {
 });
 
 
-app.listen(3003, () => {
-  console.log("Course service running on 3003");
+
+const PORT = process.env.PORT || 3003;
+
+app.listen(PORT, () => {
+  console.log("Course Service running on port", PORT);
 });

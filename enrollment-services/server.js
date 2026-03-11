@@ -66,6 +66,9 @@ app.delete("/drop/:id", async (req, res) => {
   });
 });
 
-app.listen(3005, () => {
-  console.log("Enrollment service running on 3005");
+
+const PORT = process.env.PORT || 3005;
+
+app.listen(PORT, () => {
+  console.log("Enrollment Service running on port", PORT);
 });

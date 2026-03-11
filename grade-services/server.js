@@ -38,6 +38,9 @@ app.get("/grades/:studentId", async (req, res) => {
   res.json(result.rows);
 });
 
-app.listen(3004, () => {
-  console.log("Grade service running on 3004");
+
+const PORT = process.env.PORT || 3004;
+
+app.listen(PORT, () => {
+  console.log("Grade Service running on port", PORT);
 });
