@@ -8,7 +8,7 @@ app.use(express.json());
 
 
 const pool = new Pool({
-  connectionString: "postgresql://micsql_user:i899qR4MwWxxv9b5w5mtVwSpv5WquU2g@dpg-d6nu1cfgi27c73ac10jg-a/micsql",
+  connectionString: "postgresql://micsql_user:i899qR4MwWxxv9b5w5mtVwSpv5WquU2g@dpg-d6nu1cfgi27c73ac10jg-a/course_db",
   ssl: {
     rejectUnauthorized: false
   }

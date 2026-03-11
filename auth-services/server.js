@@ -17,7 +17,7 @@ const SECRET = "mysecret";
 /* ================= DATABASE ================= */
 
 const pool = new Pool({
-  connectionString: "postgresql://micsql_user:i899qR4MwWxxv9b5w5mtVwSpv5WquU2g@dpg-d6nu1cfgi27c73ac10jg-a/micsql",
+  connectionString: "postgresql://micsql_user:i899qR4MwWxxv9b5w5mtVwSpv5WquU2g@dpg-d6nu1cfgi27c73ac10jg-a/auth_db",
   ssl: {
     rejectUnauthorized: false
   }
@@ -168,7 +168,13 @@ app.get("/", (req, res) => {
   res.send("Auth Service running");
 });
 
-
+pool.query("SELECT NOW()")
+  .then(res => {
+    console.log("DB CONNECTED:", res.rows);
+  })
+  .catch(err => {
+    console.error("DB ERROR:", err);
+  });
 /* ================= SERVER ================= */
 
 const PORT = process.env.PORT || 3002;
